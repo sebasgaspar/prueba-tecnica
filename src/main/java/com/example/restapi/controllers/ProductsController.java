@@ -1,6 +1,5 @@
 package com.example.restapi.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,15 +56,14 @@ public class ProductsController {
     }
 
     @GetMapping("/popular")
-    public ArrayList<Map<String, Object>> getPopular() {
-        return this.productService.getPopular();
-        // try {
-        //     Map<String, Object> response = new HashMap<>();
-        //     response.put("products", this.productService.getPopular());
+    public ResponseEntity<Map<String, Object>> getPopular() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", this.productService.getPopular());
 
-        //     return new ResponseEntity<>(response, HttpStatus.OK);
-        // } catch (Exception e) {
-        //     return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        // }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
