@@ -1,85 +1,120 @@
-### Prerequisites
+# API VirtualShop
+## Get Popular Products
 
-To be able to run this application you must need to install Node.js 12.0.0 or
-newer. Additionally, You must specify several enviroment variables to be able
-to connect to firebase. (This credentials can be found in your firebase
-project settings).
+**URL: https://prueba-tecnica-experimentality.herokuapp.com**
+* **URL:** /products/popular
+* **Method:** GET
 
+### Response
+```bash
+ {
+    "products": [
+        {
+            "name": "Camibuso",
+            "image": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/camisbuso.jpg?alt=media&token=7897e9ca-c8d7-470f-9a2c-ff6fee28cbfa",
+            "backgroundImage": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/camibusoBack.jpg?alt=media&token=275db731-6ae6-40f7-9638-42b8f9be66ea",
+            "percent": 10,
+            "discountPrice": 10000,
+            "id": 1,
+            "price": 5000
+        },
+        {
+            "price": 40000,
+            "discountPrice": 20000,
+            "id": 2,
+            "percent": 20,
+            "image": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/camisa.jpg?alt=media&token=09342963-f7db-483e-a038-6a21316d167d",
+            "backgroundImage": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/camisa.jpg?alt=media&token=09342963-f7db-483e-a038-6a21316d167d",
+            "name": "Camisa"
+        },
+        {
+            "name": "Gafas",
+            "backgroundImage": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/gafas.png?alt=media&token=8ef6af1f-ad7c-4a31-abef-b63410e8e787",
+            "id": 15,
+            "price": 4000,
+            "image": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/gafas.png?alt=media&token=8ef6af1f-ad7c-4a31-abef-b63410e8e787",
+            "percent": 10,
+            "discountPrice": 4000
+        }
+    ]
+}
 ```
-API_KEY=
-TYPE=
-PROJECT_ID=
-PRIVATE_KEY_ID=
-PRIVATE_KEY=
-CLIENT_EMAIL=
-CLIENT_ID=
-AUTH_URI=
-TOKEN_URI=
-AUTH_PROVIDER_X509_CERT_URL=
-CLIENT_X509_CERT_URL=
-```
+## Get Search Product
 
+* **URL:** /products/query?search= &pagination=
+* **Method:** GET
+* **Params:** GET
+    * search
+    * pagination
 
-Secondly, you must create a client app in firebase to get an `API_KEY` to be
-able to sign in with the rest API. Finally, you must allow signup with email and
-password in the authentication tab on firebase.
+*Example:* https://prueba-tecnica-experimentality.herokuapp.com/products/query?search=gafas&pagination=0
 
-### Development
-
-If you want to contribute to this project you may want to use live preview
-technology, you must use two different terminals to run the application the
-first for express rest API and the second for the react frontend.
-
-*Example of the rest API*
+### Response
 
 ```bash
-cd asesorex
-npm install
-npm run dev-start
+{
+    "totalPages": 1,
+    "products": [
+        {
+            "name": "Gafas",
+            "backgroundImage": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/gafas.png?alt=media&token=8ef6af1f-ad7c-4a31-abef-b63410e8e787",
+            "id": 15,
+            "price": 4000,
+            "image": "https://firebasestorage.googleapis.com/v0/b/proyecto3ti.appspot.com/o/gafas.png?alt=media&token=8ef6af1f-ad7c-4a31-abef-b63410e8e787",
+            "percent": 10,
+            "discountPrice": 4000
+        }
+    ]
+}
 ```
+## Get Product By Id
 
-*Example of react frontend*
+* **URL:** /products/${id}
+* **Method:** GET
 
+### Response
 ```bash
-cd asesorex
-cd client
-npm install
-npm run start
+{
+    "products": {
+        "id": 15,
+        "name": "Gafas",
+        "descripcion": "Gafas de sol",
+        "price": 4000,
+        "discountPrice": 4000,
+        "percent": 10,
+        "image": "http:///dasdasd.com.com",
+        "backgroundImage": "http:///dasdasd.com.com/back"
+    }
+}
 ```
+## Create Product
 
-### Production
+* **URL:** /products
+* **Method:** POST
 
-To deploy this application in the Amazon Web Services, you need to deploy first the 
-express server on the aws lambda service, to be able to do this, you need install 
-the serverless package globally with the Node Nackage Manager
-
+### Request
 ```bash
-npm install -g serverless
+{
+    "name": "Gafas",
+    "descripcion": "Gafas de sol",
+    "price": 4000,
+    "discountPrice": 4000,
+    "percent": 10,
+    "image": "http:///dasdasd.com.com",
+    "backgroundImage":"http:///dasdasd.com.com/back"
+}
 ```
 
-The Serverless Framework build applications comprised of microservices that run in response 
-to events, auto-scale for you, and only charge you when they run. This lowers the total cost 
-of maintaining your apps, enabling you to build more logic, faster.
-
-Once created, you must supply your amazon web services credentials to serverless to create the 
-lambda project on your account through the terminal. This credentials can be found in your AWS
-console or with the project admin.
-
+### Response
 ```bash
-serverless config credentials --provider aws --key <AWSAccessKeyId> --secret <AWSSecretKey>
+{
+    "id": 15,
+    "name": "Gafas",
+    "descripcion": "Gafas de sol",
+    "price": 4000,
+    "discountPrice": 4000,
+    "percent": 10,
+    "image": "http:///dasdasd.com.com",
+    "backgroundImage": "http:///dasdasd.com.com/back"
+}
 ```
-
-Now you can deploy the express server with AWS lambda functions.
-Note: The serverless configuration is already created in the project with serverless.yml 
-file and the application will be deployed in brazil for better latency configuration
-
-
-```bash
-cd asesorex
-serverless deploy
-```
-
-To deploy the frontend, you must have access to amplify console.
-
-After this commands you should be able to access all the functionalities of
-cargox from one single domain.
