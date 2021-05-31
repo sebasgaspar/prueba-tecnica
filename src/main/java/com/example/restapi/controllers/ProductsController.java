@@ -46,12 +46,26 @@ public class ProductsController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<ProductsModel> getProductById(@PathVariable("id") Long id) {
-        return this.productService.getById(id);
+    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable("id") Long id) {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", this.productService.getById(id));
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/popular")
-    public ArrayList<Map<String, Object>> getPopular() {
-        return this.productService.getPopular();
+    public ResponseEntity<Map<String, Object>> getPopular() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", this.productService.getPopular());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
